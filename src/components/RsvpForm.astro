@@ -1,0 +1,102 @@
+---
+import config from '../data/config.json';
+const targetWA = config.contact.whatsapp_rsvp;
+---
+
+<section class="py-16 px-4 bg-[#edf5f9]" id="rsvp">
+  <div class="max-w-3xl mx-auto fade-in-section">
+    <div class="bg-white/60 backdrop-blur-sm p-8 rounded-3xl shadow-soft border border-[#dcebf3]">
+      
+      <h2 class="text-3xl font-serif text-center text-[#2c3e50]">RSVP & Kehadiran</h2>
+      <div class="text-center text-[#475e75] italic text-lg mt-1 mb-8">
+        “Mohon konfirmasi kehadiran Anda”
+      </div>
+      
+      <form id="rsvpForm" class="flex flex-col gap-5 max-w-xl mx-auto">
+        <input type="hidden" id="targetWA" value={targetWA} />
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <input 
+            type="text" 
+            id="guestName" 
+            placeholder="Nama Lengkap" 
+            required
+            class="guest-input flex-1 px-5 py-3 rounded-full border border-[#b6d0e8] bg-white/70 outline-none placeholder:text-[#7b8d9f] text-[#2c3e50]"
+          >
+          <select 
+            id="isAttending" 
+            required
+            class="guest-input flex-1 px-5 py-3 rounded-full border border-[#b6d0e8] bg-white/70 outline-none text-[#2c3e50] appearance-none"
+          >
+            <option value="" disabled selected class="text-[#7b8d9f]">Status Kehadiran...</option>
+            <option value="Hadir">Ya, Saya Hadir</option>
+            <option value="Tidak Hadir">Maaf, Tidak Bisa Hadir</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <select 
+            id="pax" 
+            required
+            class="guest-input flex-1 px-5 py-3 rounded-full border border-[#b6d0e8] bg-white/70 outline-none text-[#2c3e50] appearance-none"
+          >
+            <option value="" disabled selected>Jumlah Tamu...</option>
+            <option value="1">1 Orang</option>
+            <option value="2">2 Orang</option>
+          </select>
+        </div>
+
+        <textarea 
+          id="message" 
+          rows="3" 
+          placeholder="Tuliskan ucapan / doa untuk mempelai..." 
+          required
+          class="guest-input w-full px-5 py-4 rounded-2xl border border-[#b6d0e8] bg-white/70 outline-none placeholder:text-[#7b8d9f] text-[#2c3e50] resize-none"
+        ></textarea>
+
+        <button 
+          type="submit" 
+          class="self-center px-10 py-3 mt-2 bg-[#f2b6c1] text-white rounded-full shadow-md hover:bg-[#eca3b1] transition-all duration-200 text-lg flex items-center gap-2"
+        >
+          Kirim RSVP <i class="fab fa-whatsapp"></i>
+        </button>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .guest-input:focus {
+    border-color: #eca3b1;
+    box-shadow: 0 0 0 3px rgba(201, 122, 110, 0.2);
+  }
+</style>
+
+<script>
+	const form = document.getElementById('rsvpForm');
+	if (form) {
+		form.addEventListener('submit', function(event) {
+			event.preventDefault();
+
+			const guestName = (document.getElementById('guestName') as HTMLInputElement).value.trim();
+			const isAttending = (document.getElementById('isAttending') as HTMLSelectElement).value;
+			const pax = (document.getElementById('pax') as HTMLSelectElement).value;
+			const message = (document.getElementById('message') as HTMLTextAreaElement).value.trim();
+			const targetWA = (document.getElementById('targetWA') as HTMLInputElement).value;
+
+			const waText = `Halo, saya *${guestName}*.
+			
+Menyatakan bahwa saya *${isAttending}* pada acara pernikahan ini.
+Jumlah tamu: *${pax} Orang*.
+
+*Pesan/Ucapan:*
+"${message}"`;
+
+			const encodedText = encodeURIComponent(waText);
+			const waURL = `https://wa.me/${targetWA}?text=${encodedText}`;
+
+			window.open(waURL, '_blank');
+		});
+	}
+</script>

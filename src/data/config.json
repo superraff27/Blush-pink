@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "title": "Pernikahan Romeo & Juliet",
+    "description": "Undangan pernikahan digital Romeo dan Juliet.",
+    "theme": {
+      "primary": "#c28173",
+      "secondary": "#fdf6f2",
+      "text": "#4a2c2a",
+      "accent": "#b55a5a"
+    }
+  },
+  "couple": {
+    "groom": {
+      "name": "Romeo Montague",
+      "nickname": "Romeo",
+      "parents": "Putra dari Bpk. Montague & Ibu Montague"
+    },
+    "bride": {
+      "name": "Juliet Capulet",
+      "nickname": "Juliet",
+      "parents": "Putri dari Bpk. Capulet & Ibu Capulet"
+    }
+  },
+  "event": {
+    "date": "2026-12-25T08:00:00+07:00",
+    "akad": {
+      "time": "08:00 - 10:00 WIB",
+      "venue": "Masjid Raya Agung",
+      "address": "Jl. Kebahagiaan No. 1, Jakarta",
+      "mapsLink": "https://maps.google.com/..."
+    },
+    "reception": {
+      "time": "11:00 - 14:00 WIB",
+      "venue": "Grand Ballroom Hotel Bahagia",
+      "address": "Jl. Cinta Damai No. 2, Jakarta",
+      "mapsLink": "https://maps.google.com/..."
+    }
+  },
+  "contact": {
+    "whatsapp_rsvp": "6287882597576"
+  },
+  "financial": {
+    "banks": [
+      {
+        "bankName": "BCA",
+        "accountNumber": "1234567890",
+        "accountName": "Romeo Montague",
+        "isQris": false
+      }
+    ],
+    "qris": {
+      "available": true,
+      "imagePath": "/images/qris-dummy.webp"
+    }
+  },
+  "media": {
+    "coverImage": "/images/cover.webp",
+    "gallery": [
+      "/images/gallery-1.webp",
+      "/images/gallery-2.webp",
+      "/images/gallery-3.webp"
+    ],
+    "backgroundMusic": "https://www.image2url.com/r2/default/audio/1784603774306-040a6e30-c710-44c9-9d7f-44160c61ccf9.mp3"
+  }
+}

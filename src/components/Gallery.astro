@@ -1,0 +1,89 @@
+---
+import config from "../data/config.json";
+const { gallery } = config.media;
+---
+
+<section class="py-20 px-4 bg-white/30">
+  <div class="max-w-6xl mx-auto fade-in-section">
+    <h2 class="text-4xl font-serif text-center text-[#2c3e50] mb-2">
+      Momen Berharga
+    </h2>
+    <div class="w-20 h-0.5 bg-[#a6c4df] mx-auto mb-10"></div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+      <!-- We use the gallery array from config, if not enough, loop or fallback -->
+      <!-- Bagian gambar kosong sudah dihapus -->
+      <!-- Adding dummy images to match the 6-grid blush-pink theme since config only has 3 initially -->
+      <div
+        class="card-gallery rounded-2xl overflow-hidden shadow-md aspect-[4/3] bg-[#e1eef4]"
+      >
+        <img
+          src="https://i.pinimg.com/736x/07/5d/bc/075dbc880bc2f5cb2bb3b769d570f4f5.jpg"
+          alt="Gallery"
+          class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          loading="lazy"
+        />
+      </div>
+      <div
+        class="card-gallery rounded-2xl overflow-hidden shadow-md aspect-[4/3] bg-[#e1eef4]"
+      >
+        <img
+          src="https://i.pinimg.com/1200x/e7/f5/e4/e7f5e4cd0e2d7c6104fdf7eab337a5e2.jpg"
+          alt="Gallery"
+          class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          loading="lazy"
+        />
+      </div>
+      <div
+        class="card-gallery rounded-2xl overflow-hidden shadow-md aspect-[4/3] bg-[#e1eef4]"
+      >
+        <img
+          src="https://i.pinimg.com/736x/48/e5/56/48e5568c2ca9b5c6ef25184779963ec3.jpg"
+          alt="Gallery"
+          class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          loading="lazy"
+        />
+      </div>
+      <div
+        class="card-gallery rounded-2xl overflow-hidden shadow-md aspect-[4/3] bg-[#e1eef4]"
+      >
+        <img
+          src="https://i.pinimg.com/736x/00/ee/81/00ee81497f4d95cf5374fb4e07258d28.jpg"
+          alt="Gallery"
+          class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          loading="lazy"
+        />
+      </div>
+      <div
+        class="card-gallery rounded-2xl overflow-hidden shadow-md aspect-[4/3] bg-[#e1eef4]"
+      >
+        <img
+          src="https://i.pinimg.com/736x/ec/be/c5/ecbec5b8e0ffc8025721673f81745250.jpg"
+          alt="Gallery"
+          class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          loading="lazy"
+        />
+      </div>
+      <div
+        class="card-gallery rounded-2xl overflow-hidden shadow-md aspect-[4/3] bg-[#e1eef4]"
+      >
+        <img
+          src="https://i.pinimg.com/1200x/1c/60/43/1c6043e19905100d948e8c9bc6a3c5f4.jpg"
+          alt="Gallery"
+          class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .card-gallery {
+    transition: all 0.3s ease;
+  }
+  .card-gallery:hover {
+    transform: scale(1.02) translateY(-6px);
+    box-shadow: 0 25px 35px -10px rgba(180, 70, 70, 0.2);
+  }
+</style>

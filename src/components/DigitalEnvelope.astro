@@ -1,0 +1,79 @@
+---
+import config from '../data/config.json';
+const { banks, qris } = config.financial;
+---
+
+<section class="py-16 px-4 bg-white/40 backdrop-blur-sm relative overflow-hidden">
+  <div class="max-w-3xl mx-auto text-center fade-in-section relative z-10">
+    <div class="w-20 h-20 mx-auto rounded-full bg-[#e1eef4] flex items-center justify-center text-3xl text-[#34495e] mb-6 shadow-sm">
+      <i class="fas fa-envelope-open-text"></i>
+    </div>
+    
+    <h2 class="text-4xl font-serif text-[#2c3e50]">Amplop Digital</h2>
+    <div class="w-16 h-0.5 bg-[#a6c4df] mx-auto my-5"></div>
+    <p class="text-lg md:text-xl leading-relaxed text-[#34495e] italic font-light max-w-xl mx-auto mb-10">
+      “Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun, jika Anda ingin memberikan tanda kasih, kami menyediakan amplop digital di bawah ini.”
+    </p>
+    
+    <div class="flex flex-col md:flex-row justify-center gap-6 items-center md:items-stretch">
+      <!-- Loop Banks -->
+      {banks.map((bank) => (
+        <div class="bg-white/70 backdrop-blur-sm p-6 rounded-3xl shadow-soft border border-[#dcebf3] w-full max-w-sm flex flex-col items-center justify-center text-center">
+          <h3 class="text-2xl font-serif text-[#2c3e50] mb-2">{bank.bankName}</h3>
+          <p class="text-[#5a728a] font-medium tracking-widest text-lg mb-1">{bank.accountNumber}</p>
+          <p class="text-[#eca3b1] text-sm uppercase mb-6">a.n {bank.accountName}</p>
+          
+          <button 
+            type="button" 
+            class="copy-btn px-6 py-2 bg-[#edf5f9] hover:bg-[#e1eef4] text-[#34495e] rounded-full text-sm transition-all border border-[#dcebf3]"
+            data-rek={bank.accountNumber}
+          >
+            <i class="far fa-copy mr-2"></i>Salin Nomor Rekening
+          </button>
+        </div>
+      ))}
+
+      <!-- QRIS -->
+      {qris.available && (
+        <div class="bg-white/70 backdrop-blur-sm p-6 rounded-3xl shadow-soft border border-[#dcebf3] w-full max-w-sm flex flex-col items-center justify-center text-center">
+          <h3 class="text-2xl font-serif text-[#2c3e50] mb-4">QRIS</h3>
+          <!-- Dummy Image for QRIS -->
+          <div class="w-40 h-40 bg-white p-2 rounded-xl border border-dashed border-[#a6c4df] mb-6 mx-auto flex items-center justify-center overflow-hidden">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QRIS" class="w-full h-full object-contain opacity-80 mix-blend-multiply" loading="lazy" />
+          </div>
+          
+          <p class="text-[#5a728a] text-sm">
+            Scan QR Code ini menggunakan aplikasi M-Banking atau e-Wallet Anda.
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+  
+  <!-- decorative floral -->
+  <div class="absolute -top-10 -left-10 text-[100px] opacity-10 rotate-[20deg] select-none" style="color:#a6c4df;">🌿</div>
+</section>
+
+<script>
+  // Copy to clipboard logic
+  const copyBtns = document.querySelectorAll('.copy-btn');
+  copyBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const rek = btn.getAttribute('data-rek');
+      if (rek) {
+        navigator.clipboard.writeText(rek).then(() => {
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<i class="fas fa-check mr-2"></i>Tersalin!';
+          btn.classList.add('bg-[#d4edda]', 'text-[#155724]', 'border-[#c3e6cb]');
+          btn.classList.remove('bg-[#edf5f9]', 'text-[#34495e]', 'border-[#dcebf3]', 'hover:bg-[#e1eef4]');
+          
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.classList.remove('bg-[#d4edda]', 'text-[#155724]', 'border-[#c3e6cb]');
+            btn.classList.add('bg-[#edf5f9]', 'text-[#34495e]', 'border-[#dcebf3]', 'hover:bg-[#e1eef4]');
+          }, 2000);
+        });
+      }
+    });
+  });
+</script>

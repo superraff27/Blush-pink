@@ -1,0 +1,150 @@
+---
+import config from '../data/config.json';
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+const { theme, backgroundMusic } = config.metadata.theme ? config.metadata : { theme: config.metadata.theme, backgroundMusic: config.media.backgroundMusic };
+---
+
+<!doctype html>
+<html lang="id">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&display=swap" rel="stylesheet">
+		
+		<title>{title}</title>
+	</head>
+	<body class="antialiased min-h-screen text-[#2c3e50] bg-[#f4f9fb] font-sans">
+		
+		<!-- Background Music -->
+		<audio id="bgm" loop>
+			<source src={config.media.backgroundMusic} type="audio/mpeg">
+		</audio>
+
+		<!-- Music Toggle Button -->
+		<button id="music-toggle" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg backdrop-blur-sm transition-all bg-[#e1eef4] text-[#5a728a] hover:bg-[#e1eef4] border border-[#b6d0e8]/20">
+			<i class="fas fa-music" id="music-icon"></i>
+		</button>
+
+		<main class="w-full mx-auto relative overflow-x-hidden">
+			<slot />
+		</main>
+
+		<script>
+			// Animasi Scroll Fade-In
+			const fadeElements = document.querySelectorAll('.fade-in-section');
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+					}
+				});
+			}, { threshold: 0.15 });
+			fadeElements.forEach(el => observer.observe(el));
+
+			// Music Player Logic
+			const bgm = document.getElementById('bgm') as HTMLAudioElement;
+			const musicToggle = document.getElementById('music-toggle');
+			const musicIcon = document.getElementById('music-icon');
+			let isPlaying = false;
+
+			function playMusic() {
+				if (!isPlaying && bgm) {
+					bgm.play().then(() => {
+						if(musicIcon) musicIcon.className = 'fas fa-volume-up';
+						if(musicToggle) musicToggle.style.background = '#d1e2ec';
+						isPlaying = true;
+					}).catch(() => {
+						console.log('Autoplay dicegah browser, menunggu interaksi user.');
+					});
+				}
+			}
+
+			if(musicToggle) {
+				musicToggle.addEventListener('click', function() {
+					if (isPlaying) {
+						bgm.pause();
+						if(musicIcon) musicIcon.className = 'fas fa-music';
+						if(musicToggle) musicToggle.style.background = '#e1eef4';
+						isPlaying = false;
+					} else {
+						playMusic();
+					}
+				});
+			}
+
+			let hasScrolled = false;
+			window.addEventListener('scroll', function() {
+				if (!hasScrolled && window.scrollY > 50) {
+					hasScrolled = true;
+					playMusic();
+				}
+			});
+
+			document.addEventListener('click', function autoPlayOnClick() {
+				if (!isPlaying) {
+					playMusic();
+				}
+			}, { once: true });
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--font-sans: 'Inter', sans-serif;
+		--font-serif: 'Playfair Display', serif;
+	}
+	
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		font-family: var(--font-sans);
+	}
+
+	.font-serif {
+		font-family: var(--font-serif);
+	}
+
+	/* Scroll Animations */
+	.fade-in-section {
+		opacity: 0;
+		transform: translateY(30px);
+		transition: opacity 0.9s cubic-bezier(0.15, 0.85, 0.35, 1), transform 0.9s cubic-bezier(0.15, 0.85, 0.35, 1);
+	}
+	.fade-in-section.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* Parallax Helper */
+	.parallax-item {
+		transition: transform 0.15s ease-out;
+		will-change: transform;
+	}
+
+	/* Custom Scrollbar */
+	::-webkit-scrollbar { width: 6px; }
+	::-webkit-scrollbar-track { background: #e1eef4; }
+	::-webkit-scrollbar-thumb { background: #a6c4df; border-radius: 10px; }
+
+	.shadow-soft { box-shadow: 0 20px 40px -12px rgba(180, 80, 80, 0.08); }
+</style>

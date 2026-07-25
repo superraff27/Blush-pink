@@ -1,0 +1,121 @@
+---
+import config from '../data/config.json';
+const { groom, bride } = config.couple;
+const eventDate = config.event.date;
+---
+
+<section class="relative min-h-[90vh] flex items-end justify-center overflow-hidden" id="hero">
+  <!-- bg image with parallax -->
+  <div 
+    class="absolute inset-0 z-0 parallax-item" 
+    id="hero-parallax" 
+    style={`background-image: url('https://i.pinimg.com/1200x/72/d3/ac/72d3ac3d7d506d6701232186395a45f7.jpg'); background-size: cover; background-position: center 30%; background-repeat: no-repeat; height: 110%; top: -5%;`}
+  ></div>
+  
+  <!-- overlay gradient mask -->
+  <div class="absolute inset-0 z-10" style="background: linear-gradient(to top, rgba(252, 233, 224, 0.8) 0%, rgba(252, 233, 224, 0.1) 60%, rgba(0,0,0,0) 100%);"></div>
+  
+  <div class="relative z-20 text-center pb-12 px-6 w-full max-w-4xl mx-auto fade-in-section">
+    <span class="inline-block text-sm tracking-[0.2em] uppercase text-[#b66d5e] bg-white/40 px-5 py-1.5 rounded-full backdrop-blur-sm mb-4 border border-white/30">
+      The Wedding
+    </span>
+    <h1 class="text-5xl md:text-7xl font-serif text-[#2c3e50] leading-tight drop-shadow-sm">
+      {groom.nickname} & {bride.nickname}
+    </h1>
+    
+    <p class="text-lg md:text-2xl mt-3 text-[#34495e] font-light tracking-wide">
+      <!-- Format date from ISO string to visual format, e.g. "13 . 02 . 2027" -->
+      {new Date(eventDate).toLocaleDateString('id-ID', { day: '2-digit' })} . {new Date(eventDate).toLocaleDateString('id-ID', { month: '2-digit' })} . {new Date(eventDate).toLocaleDateString('id-ID', { year: 'numeric' })}
+    </p>
+    
+    <div class="mt-6 flex flex-wrap justify-center gap-4 text-sm md:text-base text-[#5e3b33]">
+      <span class="bg-white/40 backdrop-blur-sm px-5 py-2 rounded-full border border-white/30">
+        <i class="far fa-clock mr-2"></i>Akad {config.event.akad.time.split(' - ')[0]}
+      </span>
+      <span class="bg-white/40 backdrop-blur-sm px-5 py-2 rounded-full border border-white/30">
+        <i class="fas fa-glass-cheers mr-2"></i>Resepsi {config.event.reception.time.split(' - ')[0]}
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN SECTION -->
+<section class="py-16 px-4 bg-[#edf5f9]">
+  <div class="max-w-4xl mx-auto text-center fade-in-section">
+    <div class="flex justify-center gap-4 md:gap-8 flex-wrap" id="countdown-container">
+      <div class="countdown-card">
+        <span id="days" class="block text-4xl md:text-5xl font-serif text-[#5a728a]">00</span>
+        <span class="text-xs uppercase tracking-widest text-[#8f6158]">Hari</span>
+      </div>
+      <div class="countdown-card">
+        <span id="hours" class="block text-4xl md:text-5xl font-serif text-[#5a728a]">00</span>
+        <span class="text-xs uppercase tracking-widest text-[#8f6158]">Jam</span>
+      </div>
+      <div class="countdown-card">
+        <span id="minutes" class="block text-4xl md:text-5xl font-serif text-[#5a728a]">00</span>
+        <span class="text-xs uppercase tracking-widest text-[#8f6158]">Menit</span>
+      </div>
+      <div class="countdown-card">
+        <span id="seconds" class="block text-4xl md:text-5xl font-serif text-[#5a728a]">00</span>
+        <span class="text-xs uppercase tracking-widest text-[#8f6158]">Detik</span>
+      </div>
+    </div>
+    <p class="mt-6 text-[#7a554b] italic">menuju hari bahagia</p>
+  </div>
+</section>
+
+<!-- Inject Event Date to script -->
+<script define:vars={{ eventDate }}>
+  // ----- PARALLAX HERO -----
+  const heroParallax = document.getElementById('hero-parallax');
+  window.addEventListener('scroll', function() {
+    const scrollY = window.scrollY;
+    const hero = document.getElementById('hero');
+    if (hero && heroParallax) {
+      const rect = hero.getBoundingClientRect();
+      const offset = Math.max(0, Math.min(1, (rect.top + rect.height/2) / window.innerHeight));
+      const translateY = -5 + (scrollY * 0.15);
+      heroParallax.style.transform = `translateY(${Math.min(translateY, 15)}px)`;
+    }
+  });
+
+  // ----- COUNTDOWN -----
+  const weddingDate = new Date(eventDate).getTime();
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = weddingDate - now;
+    if (diff <= 0) {
+      document.getElementById('days').innerText = '00';
+      document.getElementById('hours').innerText = '00';
+      document.getElementById('minutes').innerText = '00';
+      document.getElementById('seconds').innerText = '00';
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    document.getElementById('days').innerText = String(days).padStart(2, '0');
+    document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+    document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+  }
+  
+  if (document.getElementById('days')) {
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
+</script>
+
+<style>
+  .countdown-card {
+    background: rgba(255, 240, 235, 0.6);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(235, 180, 170, 0.3);
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    min-width: 80px;
+    box-shadow: 0 20px 40px -12px rgba(180, 80, 80, 0.08);
+  }
+</style>

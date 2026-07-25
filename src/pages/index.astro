@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Cover from '../components/Cover.astro';
+import LoveStory from '../components/LoveStory.astro';
+import EventDetails from '../components/EventDetails.astro';
+import Gallery from '../components/Gallery.astro';
+import DigitalEnvelope from '../components/DigitalEnvelope.astro';
+import RsvpForm from '../components/RsvpForm.astro';
+import config from '../data/config.json';
+---
+
+<Layout title={config.metadata.title} description={config.metadata.description}>
+	<!-- Cover & Hero Section -->
+	<Cover />
+
+	<!-- Cerita Cinta (Estetika Tambahan) -->
+	<LoveStory />
+
+	<!-- Detail Acara & Lokasi (Maps) -->
+	<EventDetails />
+
+	<!-- Galeri Foto -->
+	<Gallery />
+
+	<!-- Amplop Digital & QRIS -->
+	<DigitalEnvelope />
+
+	<!-- Form RSVP (Ke WhatsApp) -->
+	<RsvpForm />
+	
+	<!-- Footer -->
+	<footer class="text-center py-8 text-[#5a728a] text-sm border-t border-[#dcebf3] bg-[#edf5f9]">
+		<p class="font-serif text-[#475e75] text-lg mb-1">{config.couple.groom.nickname} & {config.couple.bride.nickname}</p>
+		<p class="mt-1 opacity-70 tracking-widest uppercase text-xs">🌿 made with love</p>
+	</footer>
+</Layout>
