@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Pernikahan Romeo & Juliet",
-    "description": "Undangan pernikahan digital Romeo dan Juliet.",
+    "title": "Pernikahan Sbastian & Mia",
+    "description": "Undangan pernikahan digital Sbastian dan Mia.",
     "theme": {
       "primary": "#c28173",
       "secondary": "#fdf6f2",
@@ -12,12 +12,12 @@
   "couple": {
     "groom": {
       "name": "Romeo Montague",
-      "nickname": "Romeo",
+      "nickname": "Sbastian",
       "parents": "Putra dari Bpk. Montague & Ibu Montague"
     },
     "bride": {
       "name": "Juliet Capulet",
-      "nickname": "Juliet",
+      "nickname": "Mia",
       "parents": "Putri dari Bpk. Capulet & Ibu Capulet"
     }
   },
